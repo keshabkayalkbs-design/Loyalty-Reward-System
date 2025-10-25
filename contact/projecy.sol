@@ -14,8 +14,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
  */
 contract LoyaltyProgram is Ownable, Pausable {
 
-    // --- State Variables ---
-
+   
     // The ERC20 loyalty token contract
     IERC20 public loyaltyToken;
 
