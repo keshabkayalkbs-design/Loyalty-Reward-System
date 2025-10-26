@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 /**
  * @title LoyaltyProgram
- * @dev Manages the rules for earning and redeeming loyalty tokens.
+ * @dev Manages the rules for earning and redeeming loyalty tokens
  * This contract should be the OWNER of the LoyaltyToken contract
  * to have minting privileges.
  */
