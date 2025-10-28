@@ -22,7 +22,7 @@ contract LoyaltyProgram is Ownable, Pausable {
     // (Assuming currency and points share the same decimals)
     uint256 public rewardRate;
 
-    // Mapping of authorized merchant addresses
+    // Mapping of authorized merchant addresses.
     mapping(address => bool) public merchants;
 
     // Definition of a redeemable reward
