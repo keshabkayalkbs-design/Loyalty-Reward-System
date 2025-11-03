@@ -7,6 +7,13 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 /**
+ * @dev Interface for the Loyalty Token, including the non-standard mint function
+ */
+interface ILoyaltyToken is IERC20 {
+    function mint(address to, uint256 amount) external;
+}
+
+/**
  * @title LoyaltyProgram
  * @dev Manages the rules for earning and redeeming loyalty tokens
  * This contract should be the OWNER of the LoyaltyToken contract
@@ -14,9 +21,9 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
  */
 contract LoyaltyProgram is Ownable, Pausable {
 
-   
-    // The ERC20 loyalty token contract
-    IERC20 public loyaltyToken;
+    
+    // The ERC20 loyalty token contract (using the extended interface)
+    ILoyaltyToken public loyaltyToken;
 
     // Rate of reward: e.g., 10 points per $1 spent
     // (Assuming currency and points share the same decimals)
@@ -27,10 +34,10 @@ contract LoyaltyProgram is Ownable, Pausable {
 
     // Definition of a redeemable reward
     struct RewardItem {
-        string name;        // "10% Off Coupon"
-        uint256 cost;       // How many tokens it costs
-        uint256 stock;      // How many are available (0 for unlimited)
-        bool available;     // Whether the reward is currently active
+        string name;      // "10% Off Coupon"
+        uint256 cost;     // How many tokens it costs
+        uint256 stock;    // How many are available (0 for unlimited)
+        bool available;   // Whether the reward is currently active
     }
 
     // Mapping from a reward ID to the reward details
@@ -60,8 +67,9 @@ contract LoyaltyProgram is Ownable, Pausable {
      * @param _tokenAddress The address of the deployed LoyaltyToken contract.
      * @param _initialRate The number of points to award per unit of currency.
      */
-    constructor(address _tokenAddress, uint256 _initialRate) {
-        loyaltyToken = IERC20(_tokenAddress);
+    // --- THIS IS THE CORRECTED LINE ---
+    constructor(address _tokenAddress, uint256 _initialRate) Ownable(msg.sender) {
+        loyaltyToken = ILoyaltyToken(_tokenAddress); // Correctly cast to ILoyaltyToken
         rewardRate = _initialRate;
     }
 
@@ -126,8 +134,7 @@ contract LoyaltyProgram is Ownable, Pausable {
         uint256 rewardAmount = _purchaseAmount * rewardRate;
         
         // This fails if this contract is not the owner of the token contract
-        // Dynamic cast to the LoyaltyToken interface to call mint
-        LoyaltyToken(address(loyaltyToken)).mint(_customer, rewardAmount);
+        loyaltyToken.mint(_customer, rewardAmount);
 
         emit RewardIssued(_customer, rewardAmount, msg.sender);
     }
@@ -160,8 +167,9 @@ contract LoyaltyProgram is Ownable, Pausable {
         require(success, "LoyaltyProgram: ERC20 transfer failed. Check allowance.");
 
         // Optional: You can choose to burn the collected tokens
-        // LoyaltyToken(address(loyaltyToken)).burn(reward.cost); 
         // Or just keep them in this contract to be managed by the owner.
+        // Note: You would need to add a 'burn' function to the ILoyaltyToken interface
+        // if you wanted to call it from this contract.
 
         emit RewardRedeemed(msg.sender, _rewardId, reward.cost);
     }
