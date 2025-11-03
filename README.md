@@ -41,6 +41,8 @@ To empower businesses with a flexible and secure loyalty solution, and to provid
 
 **Deployed Contract Address:** `0x27c3E3dfB0843414c36f30649641868e11FD3151`
 
-**Verification:** `[Your Verification Status Here (e.g., Not Verified / Verified on Sourcify)]`
+**Verification:** `Verified on Sourcify`
 
-**Deployed Using:** `[Your Deployment Method Here (e.g., Remix IDE (Injected Provider - MetaMask))]`
+**Deployed Using:** `Remix IDE (Injected Provider - MetaMask)`
+
+<img width="1896" height="858" alt="Screenshot 2025-11-04 032936" src="https://github.com/user-attachments/assets/e6c1a8a8-1069-4ab9-9837-559dffc3b2bd" />
