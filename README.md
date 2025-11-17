@@ -22,7 +22,7 @@ To empower businesses with a flexible and secure loyalty solution, and to provid
 * Implement automatic token burning upon redemption to create a deflationary model.
 * Create different merchant "tiers" with different reward rates.
 * Introduce "time-locked" rewards or special promotions.
-* Integrate with other DeFi protocols to allow points to be swapped or staked.
+* Integrate with other DeFi protocols to allow points to be swapped or staked
 
 ## Setup & Deployment
 
